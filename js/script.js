@@ -36,11 +36,15 @@ const pokemon_types = async () => {
 				}
 			}
 
-			if(revealPokemon_moves.move_damage_class !== null){
-				insertPokeData(x.name, revealPokemon_moves.move_damage_class.name, namesArr, imgArr);
-			} else {
-				insertPokeData(x.name, "Not Available", namesArr, imgArr);
-			}
+			await Promise.allSettled([namesArr, imgArr])
+			.then(() => {
+				if(revealPokemon_moves.move_damage_class !== null){
+					insertPokeData(x.name, revealPokemon_moves.move_damage_class.name, namesArr, imgArr);
+				} else {
+					insertPokeData(x.name, "Not Available", namesArr, imgArr);
+				}
+			})
+			
 			
 		}
 	} catch (error) {
